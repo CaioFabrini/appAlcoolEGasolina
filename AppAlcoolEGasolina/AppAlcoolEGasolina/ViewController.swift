@@ -62,8 +62,19 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tappedCalculateButton(_ sender: UIButton) {
-        let ethanolPrice: Double = Double(ethanolPriceTextField.text ?? "0.0") ?? 0.0
-        let gasPrice: Double = Double(ethanolPriceTextField.text ?? "0.0") ?? 0.0
+        
+        // Primeiro Abordagem
+//        let ethanolPrice: Double = Double((ethanolPriceTextField.text ?? "0.0").replacingOccurrences(of: ",", with: ".") ) ?? 0.0
+//        let gasPrice: Double = Double((gasPriceTextField.text ?? "0.0").replacingOccurrences(of: ",", with: ".") ) ?? 0.0
+        
+        // Segunda Abordagem
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        
+        let ethanolPrice: Double = (formatter.number(from: ethanolPriceTextField.text ?? "0.0") as? Double) ?? 0.0
+        let gasPrice: Double = (formatter.number(from: gasPriceTextField.text ?? "0.0") as? Double) ?? 0.0
+    
         
         if ethanolPrice / gasPrice > 0.7 {
             resultLabel.text = "Melhor utilizar Gasolina!"
